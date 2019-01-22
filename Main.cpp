@@ -11,10 +11,12 @@
 /////////////////////////////////////////////////////////////////  INCLUDE
 //-------------------------------------------------------- Include système
 #include <iostream>
+#include <string>
+#include <cstring>
 using namespace std;
 //------------------------------------------------------ Include personnel
 #include "Main.h"
-
+#include "Decoupeur.h"
 ///////////////////////////////////////////////////////////////////  PRIVE
 //------------------------------------------------------------- Constantes
 
@@ -37,11 +39,49 @@ using namespace std;
 //---------------------------------------------------- Fonctions publiques
 int main(int argc, char * argv[])
 {
+	bool exclureImg = false, avecGraph = false, selecHeure = false, fichierLogConnu = false;
+	string nomGraph;
+	string fichierLog;
+	int heure;
+
 	int i = 1;
 	while(i < argc)
 	{
-		cout << argv[i] << endl;
+		string arg(argv[i]);
+		if(arg == "-g")
+		{
+			++i;
+			//cout << "Nom du fichier à charger :" << argv[i] << endl;
+			avecGraph = true;
+			nomGraph = argv[i];
+		}
+		else if(arg == "-e")
+		{
+			//cout << "Il faut exclure les images." << endl;
+			exclureImg = true;
+		}
+		else if(arg == "-t")
+		{
+			++i;
+			//cout << "A l'heure :" << argv[i] << endl;
+			selecHeure = true;
+			heure = atoi(argv[i]);
+		}
+		else
+		{
+			fichierLogConnu = true;
+			fichierLog = argv[i];
+		}
 		++i;
 	}
+
+	if(fichierLogConnu)
+	{
+		
+		Decoupeur d(fichierLog);
+		d.LigneSuivante();
+		cout << d.DecouperDate() << endl;
+	}
+	
 } //----- fin de Nom
 
