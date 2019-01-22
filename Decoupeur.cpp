@@ -42,7 +42,7 @@ string Decoupeur::DecouperDate() const
 	       		date += ligneActuelle[i];
 	}
 	return date;*/
-	return infos[0];	
+	return infos[1];	
 }
 
 
@@ -55,9 +55,6 @@ Decoupeur::Decoupeur(string nomFichier) : fichier(nomFichier), ligneActuelle("")
 #ifdef MAP
     cout << "Appel au constructeur de <Decoupeur>" << endl;
 #endif
-     infos[0] = string("");
-     infos[1] = string("");
-     infos[2] = string(""); 
 } //----- Fin de Decoupeur
 
 
@@ -84,7 +81,8 @@ void Decoupeur::DecouperLigne()
 	bool enregistrer = false;
 	int indexMot = -1;
 	int indexString = 0;
-
+	string stringTampon = "";
+	string nv_infos[3] = { string(""), string(""), string("")};
 	while(indexSep < 8)
 	{
 		tampon = ligneActuelle[indexString];
@@ -93,12 +91,17 @@ void Decoupeur::DecouperLigne()
 			++indexSep;
 			enregistrer = !enregistrer;
 			if(enregistrer)
+			{
 				++indexMot;
+			}
 		}
 		else if(enregistrer)
 		{
-			infos[indexMot] += tampon;
+			nv_infos[indexMot] += tampon;
 		}
 		++indexString;
 	}
+	
+	for(int i = 0; i < 3; ++i)
+		infos[i] = nv_infos[i];
 }
