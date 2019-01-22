@@ -12,6 +12,7 @@
 
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
+#include <vector>
 #include <fstream>
 //------------------------------------------------------------- Constantes
 
@@ -39,10 +40,15 @@ public:
     //		Retourne un string contenant la requête 
     //		HTPP de la ligne actuellement lue par le découpeur.
 
-    //string DecouperRequete() const;
+    string DecouperRequete() const;
     // Mode d'emploi :
     // 		Retourne un string contenant la requête
     // 		HTTP de la ligne actuellement lue par le découpeur.
+
+	string DecouperReferer ( ) const;
+	// Mode d'emploi :
+	// 		Retourne un string contenant la requête
+	// 		HTTP de la ligne actuellement lue par le découpeur.
     
     //int DecouperStatut() const;
     // Mode d'emploi :
@@ -78,7 +84,7 @@ protected:
 //----------------------------------------------------- Attributs protégés
 	ifstream fichier;
 	string ligneActuelle;
-	string infos[3];
+	vector<string> infos;
 };
 
 //-------------------------------- Autres définitions dépendantes de <Decoupeur>

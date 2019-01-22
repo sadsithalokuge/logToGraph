@@ -33,18 +33,18 @@ void Decoupeur::LigneSuivante()
 
 string Decoupeur::DecouperDate() const
 {
-
-	/*string date;
-	if(fichier)
-	{
-		int i;
-		for(i = 17; i < 28; ++i)
-	       		date += ligneActuelle[i];
-	}
-	return date;*/
 	return infos[1];	
 }
 
+string Decoupeur::DecouperRequete ( ) const
+{
+	return infos [2];
+}
+
+string Decoupeur::DecouperReferer ( ) const
+{
+	return infos [3];
+}
 
 //------------------------------------------------- Surcharge d'opérateurs
 
@@ -78,11 +78,10 @@ void Decoupeur::DecouperLigne()
 	char separateurs [] = { '[', ']', '"', '"', '"', '"', '"', '"' };
 	int indexSep = 0;
 	char tampon;
+	string motTampon;
 	bool enregistrer = false;
-	int indexMot = -1;
 	int indexString = 0;
 	string stringTampon = "";
-	string nv_infos[3] = { string(""), string(""), string("")};
 	while(indexSep < 8)
 	{
 		tampon = ligneActuelle[indexString];
@@ -92,16 +91,14 @@ void Decoupeur::DecouperLigne()
 			enregistrer = !enregistrer;
 			if(enregistrer)
 			{
-				++indexMot;
+				infos.push_back(motTampon);
+				motTampon = "";
 			}
 		}
 		else if(enregistrer)
 		{
-			nv_infos[indexMot] += tampon;
+			motTampon += tampon;
 		}
 		++indexString;
 	}
-	
-	for(int i = 0; i < 3; ++i)
-		infos[i] = nv_infos[i];
 }

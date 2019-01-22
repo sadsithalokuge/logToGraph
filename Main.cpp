@@ -81,6 +81,8 @@ int main(int argc, char * argv[])
 		Decoupeur d(fichierLog);
 		d.LigneSuivante();
 		cout << d.DecouperDate() << endl;
+		cout << d.DecouperReferer() << endl;
+		cout << d.DecouperRequete() << endl;
 	}
 	
 } //----- fin de Nom
