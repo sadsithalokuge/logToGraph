@@ -66,6 +66,10 @@ public:
     // 		navigateur utilisé pour effectuer la requête de 
     // 		la ligne actuelle du log.
 
+    bool EstOK() const;
+    // Mode d'emploi :
+    // 		Retourne un booléen indiquant si le Découpeur peut
+    // 		continuer à lire dans le le fichier.
 
 //------------------------------------------------- Surcharge d'opérateurs
 

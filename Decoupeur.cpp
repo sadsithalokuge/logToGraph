@@ -51,6 +51,11 @@ string Decoupeur::DecouperNavigateur() const
 	return infos[3];
 }
 
+bool Decoupeur::EstOK() const
+{
+	return fichier.good();
+}
+
 //------------------------------------------------- Surcharge d'opérateurs
 
 //-------------------------------------------- Constructeurs - destructeur

@@ -83,6 +83,7 @@ int main(int argc, char * argv[])
 		cout << d.DecouperDate() << endl;
 		cout << d.DecouperReferer() << endl;
 		cout << d.DecouperRequete() << endl;
+		cout << d.DecouperNavigateur() << endl;
 	}
 	
 } //----- fin de Nom
