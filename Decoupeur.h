@@ -45,10 +45,10 @@ public:
     // 		Retourne un string contenant la requête
     // 		HTTP de la ligne actuellement lue par le découpeur.
 
-	string DecouperReferer ( ) const;
-	// Mode d'emploi :
-	// 		Retourne un string contenant la requête
-	// 		HTTP de la ligne actuellement lue par le découpeur.
+    string DecouperReferer ( ) const;
+    // Mode d'emploi :
+    // 		Retourne un string contenant la requête
+    // 		HTTP de la ligne actuellement lue par le découpeur.
     
     //int DecouperStatut() const;
     // Mode d'emploi :
@@ -60,7 +60,7 @@ public:
     // 		Retourne la quantite de données (en octets) qui a été
     // 		transférée au serveur.
     
-    //string DecouperNavigateur() const;
+    string DecouperNavigateur() const;
     // Mode d'emploi :
     // 		Retourne un string contenant l'identifiant du 
     // 		navigateur utilisé pour effectuer la requête de 

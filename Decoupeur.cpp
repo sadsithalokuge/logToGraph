@@ -33,17 +33,22 @@ void Decoupeur::LigneSuivante()
 
 string Decoupeur::DecouperDate() const
 {
-	return infos[1];	
+	return infos[0];	
 }
 
 string Decoupeur::DecouperRequete ( ) const
 {
-	return infos [2];
+	return infos [1];
 }
 
 string Decoupeur::DecouperReferer ( ) const
 {
-	return infos [3];
+	return infos [2];
+}
+
+string Decoupeur::DecouperNavigateur() const
+{
+	return infos[3];
 }
 
 //------------------------------------------------- Surcharge d'opérateurs
@@ -88,12 +93,12 @@ void Decoupeur::DecouperLigne()
 		if( tampon == separateurs[indexSep])
 		{
 			++indexSep;
-			enregistrer = !enregistrer;
 			if(enregistrer)
 			{
 				infos.push_back(motTampon);
 				motTampon = "";
 			}
+			enregistrer = !enregistrer;
 		}
 		else if(enregistrer)
 		{
