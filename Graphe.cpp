@@ -30,27 +30,9 @@ using namespace std;
 
 
 //------------------------------------------------- Surcharge d'opérateurs
-Graphe & Graphe::operator = ( const Graphe & unGraphe )
-// Algorithme :
-//
-{
-} //----- Fin de operator =
-
-
 //-------------------------------------------- Constructeurs - destructeur
-Graphe::Graphe ( const Graphe & unGraphe )
-// Algorithme :
-//
-{
-#ifdef MAP
-    cout << "Appel au constructeur de copie de <Graphe>" << endl;
-#endif
-} //----- Fin de Graphe (constructeur de copie)
 
-
-Graphe::Graphe ( )
-// Algorithme :
-//
+Graphe::Graphe ( ) 
 {
 #ifdef MAP
     cout << "Appel au constructeur de <Graphe>" << endl;

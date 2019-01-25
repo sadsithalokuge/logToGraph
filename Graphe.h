@@ -22,7 +22,7 @@ using namespace std;
 typedef struct
 {
 	int nbVisites;
-	unordered_map<int,int> donneesNoeud;
+	unordered_map<string*,int> donneesNoeud;
 }noeud;
 
 //------------------------------------------------------------------------
@@ -31,7 +31,7 @@ typedef struct
 //
 //------------------------------------------------------------------------
 
-class Graphe : public Ancetre
+class Graphe
 {
 //----------------------------------------------------------------- PUBLIC
 
@@ -45,20 +45,8 @@ public:
 
 
 //------------------------------------------------- Surcharge d'opérateurs
-    Graphe & operator = ( const Graphe & unGraphe );
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
-
 
 //-------------------------------------------- Constructeurs - destructeur
-    Graphe ( const Graphe & unGraphe );
-    // Mode d'emploi (constructeur de copie) :
-    //
-    // Contrat :
-    //
-
     Graphe ( );
     // Mode d'emploi :
     //
@@ -77,8 +65,8 @@ protected:
 //----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
-	unordered_map<int,noeud> mapArc;
-	vector<string> adresses;
+	unordered_map<string*,noeud> mapArc;
+	vector<string*> adresses;
 };
 
 //-------------------------------- Autres définitions dépendantes de <Graphe>
