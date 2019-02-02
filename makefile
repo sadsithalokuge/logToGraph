@@ -1,7 +1,7 @@
 exe=main
-cpp=Main.cpp Decoupeur.cpp
+cpp=Main.cpp Decoupeur.cpp Graphe.cpp
 head=$(cpp:.cpp=.h)
-_obj= a_Main.o a_Decoupeur.o
+_obj= a_Main.o a_Decoupeur.o a_Graphe.o
 
 binDir=bin/
 obj=$(subst a_, $(binDir), $(_obj)) 
