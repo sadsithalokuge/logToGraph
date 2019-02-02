@@ -29,6 +29,11 @@ void Graphe::Afficher() const
 	for(unordered_map<string *, noeud>::const_iterator it = mapArc.begin(); it != mapArc.end(); ++it)	
 	{
 		cout << *((*it).first) << " : " << (*it).second.nbVisites << endl;
+		for(unordered_map<string *, int>::const_iterator itRef = (*it).second.donneesNoeud.begin();
+				itRef != (*it).second.donneesNoeud.end(); ++itRef)
+		{
+			cout << " Référence : " << (*(*itRef).first) << " : " << (*itRef).second << endl;
+		}
 	}
 }
 
@@ -39,6 +44,7 @@ void Graphe::Ajouter(string * cible, string * ref)
 	{
 		noeud n;
 		n.nbVisites = 1;
+		n.donneesNoeud.insert(pair<string *, int>(ref, 1));
 		pair<string *, noeud> p(cible, n);
 		mapArc.insert(p);
 	}
