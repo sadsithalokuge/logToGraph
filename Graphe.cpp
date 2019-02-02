@@ -12,6 +12,7 @@
 
 //-------------------------------------------------------- Include système
 #include <iostream>
+#include <string>
 using namespace std;
 
 //------------------------------------------------------ Include personnel
@@ -22,12 +23,33 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-// type Graphe::Méthode ( liste des paramètres )
-// Algorithme :
-//
-//{
-//} //----- Fin de Méthode
+void Graphe::Ajouter(string * cible, string * ref)
+{
+	unordered_map<string *, noeud>::iterator it = mapArc.find(cible);
+	if( it == mapArc.end())
+	{
+		noeud n;
+		n.nbVisites = 1;
+		pair<string *, noeud> p(cible, n);
+		mapArc.insert(p);
+	}
+	else
+	{
+		(*it).second.nbVisites ++;
+		unordered_map<string *, int>::iterator itRef = (*it).second.donneesNoeud.find(ref);
+		if(itRef == (*it).second.donneesNoeud.end())
+		{
+			pair<string *, int> pRef(ref, 1);
+			(*it).second.donneesNoeud.insert(pRef);
+		}
+		else
+		{
+			(*itRef).second ++;
+		}
+	}
 
+
+}
 
 //------------------------------------------------- Surcharge d'opérateurs
 //-------------------------------------------- Constructeurs - destructeur

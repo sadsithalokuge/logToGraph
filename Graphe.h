@@ -11,9 +11,9 @@
 #define GRAPHE_H
 
 //--------------------------------------------------- Interfaces utilisées
-#include <string>;
-#include <vector>;
-#include <unordered_map>;
+#include <string>
+#include <vector>
+#include <unordered_map>
 using namespace std;
 //------------------------------------------------------------- Constantes
 
@@ -37,9 +37,14 @@ class Graphe
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    type Méthode ( liste des paramètres );
+    void Ajouter(string * cible, string * ref); 
     // Mode d'emploi :
-    //
+    //		Ajoute la chaîne de caractère pointée par cible dans la
+    //		structure de données. Si celle ci est déja présente, son
+    //		compteur de visite sera juste incrémenté.
+    //		De même, la référence de la cible sera insérée dans la
+    //		structure de données du Noeud si elle n'est pas présente.
+    //		Sinon, son compteur sera lui aussi incrémenté.
     // Contrat :
     //
 
