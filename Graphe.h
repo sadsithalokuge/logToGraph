@@ -37,6 +37,13 @@ class Graphe
 
 public:
 //----------------------------------------------------- Méthodes publiques
+
+    void Afficher() const;
+    // Mode d'emploi :
+    // 		Affiche le contenu du Graphe. Chaque couple clé/valeur est
+    // 		affiché.
+   
+
     void Ajouter(string * cible, string * ref); 
     // Mode d'emploi :
     //		Ajoute la chaîne de caractère pointée par cible dans la

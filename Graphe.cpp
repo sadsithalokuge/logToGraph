@@ -23,6 +23,15 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
+
+void Graphe::Afficher() const
+{
+	for(unordered_map<string *, noeud>::const_iterator it = mapArc.begin(); it != mapArc.end(); ++it)	
+	{
+		cout << *((*it).first) << " : " << (*it).second.nbVisites << endl;
+	}
+}
+
 void Graphe::Ajouter(string * cible, string * ref)
 {
 	unordered_map<string *, noeud>::iterator it = mapArc.find(cible);
