@@ -35,17 +35,17 @@ public:
     // Mode d'emploi :
     // 		Passe à la ligne suivante du fichier lu.
 
-    string DecouperDate() const;
+    string * DecouperDate() const;
     // Mode d'emploi :
     //		Retourne un string contenant la requête 
     //		HTPP de la ligne actuellement lue par le découpeur.
 
-    string DecouperRequete() const;
+    string * DecouperRequete() const;
     // Mode d'emploi :
     // 		Retourne un string contenant la requête
     // 		HTTP de la ligne actuellement lue par le découpeur.
 
-    string DecouperReferer ( ) const;
+    string * DecouperReferer ( ) const;
     // Mode d'emploi :
     // 		Retourne un string contenant la requête
     // 		HTTP de la ligne actuellement lue par le découpeur.
@@ -60,7 +60,7 @@ public:
     // 		Retourne la quantite de données (en octets) qui a été
     // 		transférée au serveur.
     
-    string DecouperNavigateur() const;
+    string * DecouperNavigateur() const;
     // Mode d'emploi :
     // 		Retourne un string contenant l'identifiant du 
     // 		navigateur utilisé pour effectuer la requête de 

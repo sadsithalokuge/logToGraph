@@ -31,24 +31,24 @@ void Decoupeur::LigneSuivante()
 	}
 } //----- Fin de Méthode
 
-string Decoupeur::DecouperDate() const
+string * Decoupeur::DecouperDate() const
 {
-	return infos[0];	
+	return new string(infos[0]);	
 }
 
-string Decoupeur::DecouperRequete ( ) const
+string * Decoupeur::DecouperRequete ( ) const
 {
-	return infos [1];
+	return new string(infos[1]);
 }
 
-string Decoupeur::DecouperReferer ( ) const
+string * Decoupeur::DecouperReferer ( ) const
 {
-	return infos [2];
+	return new string(infos[2]);
 }
 
-string Decoupeur::DecouperNavigateur() const
+string * Decoupeur::DecouperNavigateur() const
 {
-	return infos[3];
+	return new string(infos[3]);
 }
 
 bool Decoupeur::EstOK() const
