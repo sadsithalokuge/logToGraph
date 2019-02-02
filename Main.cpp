@@ -17,6 +17,7 @@ using namespace std;
 //------------------------------------------------------ Include personnel
 #include "Main.h"
 #include "Decoupeur.h"
+#include "Graphe.h"
 ///////////////////////////////////////////////////////////////////  PRIVE
 //------------------------------------------------------------- Constantes
 
@@ -77,14 +78,15 @@ int main(int argc, char * argv[])
 
 	if(fichierLogConnu)
 	{
-		
+		Graphe g;
 		Decoupeur d(fichierLog);
-		d.LigneSuivante();
-		cout << d.DecouperDate() << endl;
-		cout << d.DecouperReferer() << endl;
-		cout << d.DecouperRequete() << endl;
-		cout << d.DecouperNavigateur() << endl;
+		while(d.EstOK())
+		{
+			d.LigneSuivante();
+			//cout << *(d.DecouperReferer()) << " : " << *(d.DecouperRequete()) << endl;
+			g.Ajouter(d.DecouperRequete(), d.DecouperReferer());
+		}
+		g.Afficher();
 	}
-	
 } //----- fin de Nom
 
