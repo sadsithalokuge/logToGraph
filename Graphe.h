@@ -14,12 +14,14 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <map>
 using namespace std;
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
 
 typedef unordered_map<string* , int> catNode;
+typedef multimap<int , string*> catTop;
 typedef unordered_map<string , string*> catAdresse;
 
 typedef struct
@@ -62,6 +64,7 @@ public:
     // Contrat :
     //
 
+	void afficherTop ();
 
 //------------------------------------------------- Surcharge d'opérateurs
 

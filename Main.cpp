@@ -55,9 +55,7 @@ int main(int argc, char * argv[])
 		if(arg == "-g")
 		{
 			++i;
-			cout << "Nom du fichier à charger : " << argv[i] << endl;
 			avecGraph = true;
-			nomGraph = argv[i];
 		}
 		else if(arg == "-e")
 		{
@@ -67,9 +65,7 @@ int main(int argc, char * argv[])
 		else if(arg == "-t")
 		{
 			++i;
-			cout << "A l'heure : " << argv[i] << endl;
 			selecHeure = true;
-			heure = atoi(argv[i]);
 
 		}
 		else
@@ -78,6 +74,11 @@ int main(int argc, char * argv[])
 			fichierLog = argv[i];
 			++i;
 		}
+	}
+
+	if ( argc < 3 && ( avecGraph || exclureImg || selecHeure ))
+	{
+		cout << "Attention  : Il n'y a pas assez d'arguments" << endl;
 	}
 
 	if(fichierLogConnu)
@@ -96,7 +97,8 @@ int main(int argc, char * argv[])
 				g.Ajouter ( requete , referer );
 			}
 		}
-		g.Afficher();
+		//g.Afficher();
+		g.afficherTop();
 	}
 } //----- fin de Nom
 

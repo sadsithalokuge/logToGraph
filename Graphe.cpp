@@ -67,6 +67,31 @@ void Graphe::Ajouter(string * cible, string * ref)
 
 }
 
+void Graphe :: afficherTop ()
+{
+	catTop top;
+	int size = 10;
+
+	for ( auto&& item : mapArc )
+	{
+		top.emplace ( item.second.nbVisites , item.first );
+	}
+
+	if ( top.size ( ) < 10 )
+	{
+		size = top.size ( );
+	}
+
+	cout << "Top " << size << " : " << endl;
+
+	int i = 0;
+	for ( catTop::iterator it = top.end ( ); i < size; ++i)
+	{
+		--it;
+		cout << *(it->second) << " : " << it->first << endl;
+	}
+}
+
 //------------------------------------------------- Surcharge d'opérateurs
 //-------------------------------------------- Constructeurs - destructeur
 
