@@ -40,7 +40,10 @@ using namespace std;
 //---------------------------------------------------- Fonctions publiques
 int main(int argc, char * argv[])
 {
-	bool exclureImg = false, avecGraph = false, selecHeure = false, fichierLogConnu = false;
+	bool exclureImg = false;
+	bool avecGraph = false;
+	bool selecHeure = false;
+	bool fichierLogConnu = false;
 	string nomGraph;
 	string fichierLog;
 	int heure;
@@ -52,7 +55,7 @@ int main(int argc, char * argv[])
 		if(arg == "-g")
 		{
 			++i;
-			//cout << "Nom du fichier à charger :" << argv[i] << endl;
+			cout << "Nom du fichier à charger : " << argv[i] << endl;
 			avecGraph = true;
 			nomGraph = argv[i];
 		}
@@ -64,9 +67,10 @@ int main(int argc, char * argv[])
 		else if(arg == "-t")
 		{
 			++i;
-			//cout << "A l'heure :" << argv[i] << endl;
+			//cout << "A l'heure : " << argv[i] << endl;
 			selecHeure = true;
 			heure = atoi(argv[i]);
+
 		}
 		else
 		{
@@ -76,6 +80,8 @@ int main(int argc, char * argv[])
 		++i;
 	}
 
+	fichierLogConnu = true;
+
 	if(fichierLogConnu)
 	{
 		Graphe g;
@@ -84,6 +90,7 @@ int main(int argc, char * argv[])
 		{
 			d.LigneSuivante();
 			//cout << *(d.DecouperReferer()) << " : " << *(d.DecouperRequete()) << endl;
+			cout << "coucou" << endl;
 			g.Ajouter(d.DecouperRequete(), d.DecouperReferer());
 		}
 		g.Afficher();
