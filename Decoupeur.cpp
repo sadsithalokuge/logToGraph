@@ -38,17 +38,17 @@ string * Decoupeur::DecouperDate() const
 
 string * Decoupeur::DecouperRequete ( ) const
 {
-	return new string(infos[1]);
+	return new string(infos[2]);
 }
 
 string * Decoupeur::DecouperReferer ( ) const
 {
-	return new string(infos[2]);
+	return new string(infos[4]);
 }
 
 string * Decoupeur::DecouperNavigateur() const
 {
-	return new string(infos[3]);
+	return new string(infos[5]);
 }
 
 bool Decoupeur::EstOK() const
@@ -85,14 +85,17 @@ Decoupeur::~Decoupeur ( )
 
 void Decoupeur::DecouperLigne()
 {
-	char separateurs [] = { '[', ']', '"', '"', '"', '"', '"', '"' };
+	char separateurs [] = { '[', ']', ' ', '"', ' ', ' ', '"', ' ', '"', '"', '"', '"' };
 	int indexSep = 0;
 	char tampon;
 	string motTampon;
 	bool enregistrer = false;
 	int indexString = 0;
 	string stringTampon = "";
-	while(indexSep < 8)
+
+	infos.clear();
+
+	while(indexSep < 10)
 	{
 		tampon = ligneActuelle[indexString];
 		if( tampon == separateurs[indexSep])

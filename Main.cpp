@@ -61,13 +61,13 @@ int main(int argc, char * argv[])
 		}
 		else if(arg == "-e")
 		{
-			//cout << "Il faut exclure les images." << endl;
+			cout << "Il faut exclure les images." << endl;
 			exclureImg = true;
 		}
 		else if(arg == "-t")
 		{
 			++i;
-			//cout << "A l'heure : " << argv[i] << endl;
+			cout << "A l'heure : " << argv[i] << endl;
 			selecHeure = true;
 			heure = atoi(argv[i]);
 
@@ -76,23 +76,25 @@ int main(int argc, char * argv[])
 		{
 			fichierLogConnu = true;
 			fichierLog = argv[i];
+			++i;
 		}
-		++i;
 	}
-
-	fichierLogConnu = true;
 
 	if(fichierLogConnu)
 	{
 		Graphe g;
 		Decoupeur d(fichierLog);
+		string* requete;
+		string* referer;
 		while(d.EstOK())
 		{
 			d.LigneSuivante();
-			//cout << *(d.DecouperReferer()) << " : " << *(d.DecouperRequete()) << endl;
-			g.Ajouter(d.DecouperRequete(), d.DecouperReferer());
-			if(d.EstOK())
-				g.Ajouter(d.DecouperRequete(), d.DecouperReferer());
+			if ( d.EstOK ( ) )
+			{
+				requete = d.DecouperRequete();
+				referer = d.DecouperReferer();
+				g.Ajouter ( requete , referer );
+			}
 		}
 		g.Afficher();
 	}
