@@ -26,10 +26,10 @@ using namespace std;
 
 void Graphe::Afficher() const
 {
-	for(unordered_map<string *, noeud>::const_iterator it = mapArc.begin(); it != mapArc.end(); ++it)	
+	for(catArc::const_iterator it = mapArc.begin(); it != mapArc.end(); ++it)	
 	{
 		cout << *((*it).first) << " : " << (*it).second.nbVisites << endl;
-		for(unordered_map<string *, int>::const_iterator itRef = (*it).second.donneesNoeud.begin();
+		for(catNode::const_iterator itRef = (*it).second.donneesNoeud.begin();
 				itRef != (*it).second.donneesNoeud.end(); ++itRef)
 		{
 			cout << " Référence : " << (*(*itRef).first) << " : " << (*itRef).second << endl;
@@ -41,7 +41,7 @@ void Graphe::Ajouter(string * cible, string * ref)
 {
 	cible = InsererString(cible);
 	ref = InsererString(ref);
-	unordered_map<string *, noeud>::iterator it = mapArc.find(cible);
+	catArc::iterator it = mapArc.find(cible);
 	if( it == mapArc.end())
 	{
 		noeud n;
@@ -53,7 +53,7 @@ void Graphe::Ajouter(string * cible, string * ref)
 	else
 	{
 		(*it).second.nbVisites ++;
-		unordered_map<string *, int>::iterator itRef = (*it).second.donneesNoeud.find(ref);
+		catNode::iterator itRef = (*it).second.donneesNoeud.find(ref);
 		if(itRef == (*it).second.donneesNoeud.end())
 		{
 			pair<string *, int> pRef(ref, 1);
@@ -95,11 +95,11 @@ Graphe::~Graphe ( )
 string * Graphe::InsererString(string * value)
 {
 	string * pointer;
-	unordered_map<string, string*>::iterator it = mapStrings.find(*value);
-	if(it == mapStrings.end())
+	catAdresse::iterator it = adresses.find(*value);
+	if(it == adresses.end())
 	{
 		pair<string, string *> p(*value, value);
-		mapStrings.insert(p); //TODO: vérifier qu'il n'y a pas de copie !
+		adresses.insert(p); //TODO: vérifier qu'il n'y a pas de copie !
 		pointer = value;
 	}
 	else

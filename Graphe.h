@@ -19,11 +19,18 @@ using namespace std;
 
 //------------------------------------------------------------------ Types
 
+typedef unordered_map<string* , int> catNode;
+typedef unordered_map<string , string*> catAdresse;
+
 typedef struct
 {
 	int nbVisites;
-	unordered_map<string*,int> donneesNoeud;
+	catNode donneesNoeud;
 }noeud;
+
+typedef unordered_map<string* , noeud> catArc;
+
+
 
 //------------------------------------------------------------------------
 // Rôle de la classe <Graphe>
@@ -86,9 +93,9 @@ protected:
 	// 	passé en paramètre.
 	
 //----------------------------------------------------- Attributs protégés
-	unordered_map<string*,noeud> mapArc;
-	unordered_map<string, string*> mapStrings;
-	vector<string*> adresses;
+	catArc mapArc;
+	catAdresse adresses;
+
 };
 
 //-------------------------------- Autres définitions dépendantes de <Graphe>
