@@ -28,11 +28,11 @@ void Graphe::Afficher() const
 {
 	for(catArc::const_iterator it = mapArc.begin(); it != mapArc.end(); ++it)	
 	{
-		cout << *((*it).first) << " : " << (*it).second.nbVisites << endl;
-		for(catNode::const_iterator itRef = (*it).second.donneesNoeud.begin();
-				itRef != (*it).second.donneesNoeud.end(); ++itRef)
+		cout << *(it->first) << " : " << it->second.nbVisites << endl;
+		for(catNode::const_iterator itRef = it->second.donneesNoeud.begin();
+				itRef != it->second.donneesNoeud.end(); ++itRef)
 		{
-			cout << " Référence : " << (*(*itRef).first) << " : " << (*itRef).second << endl;
+			cout << " Référence : " << *(itRef->first) << " : " << itRef->second << endl;
 		}
 	}
 }
@@ -52,16 +52,16 @@ void Graphe::Ajouter(string * cible, string * ref)
 	}
 	else
 	{
-		(*it).second.nbVisites ++;
-		catNode::iterator itRef = (*it).second.donneesNoeud.find(ref);
-		if(itRef == (*it).second.donneesNoeud.end())
+		it->second.nbVisites ++;
+		catNode::iterator itRef = it->second.donneesNoeud.find(ref);
+		if(itRef == it->second.donneesNoeud.end())
 		{
 			pair<string *, int> pRef(ref, 1);
-			(*it).second.donneesNoeud.insert(pRef);
+			it->second.donneesNoeud.insert(pRef);
 		}
 		else
 		{
-			(*itRef).second ++;
+			itRef->second ++;
 		}
 	}
 
@@ -130,7 +130,7 @@ string * Graphe::InsererString(string * value)
 	else
 	{
 		delete value;
-		pointer = (*it).second;
+		pointer = it->second;
 	}
 	return pointer;
 }

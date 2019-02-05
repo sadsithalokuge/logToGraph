@@ -54,7 +54,6 @@ int main(int argc, char * argv[])
 		string arg(argv[i]);
 		if(arg == "-g")
 		{
-			++i;
 			avecGraph = true;
 		}
 		else if(arg == "-e")
@@ -64,40 +63,29 @@ int main(int argc, char * argv[])
 		}
 		else if(arg == "-t")
 		{
-			++i;
 			selecHeure = true;
-
 		}
 		else
 		{
 			fichierLogConnu = true;
 			fichierLog = argv[i];
-			++i;
 		}
-	}
 
-	if ( argc < 3 && ( avecGraph || exclureImg || selecHeure ))
-	{
-		cout << "Attention  : Il n'y a pas assez d'arguments" << endl;
+		++i;
 	}
 
 	if(fichierLogConnu)
 	{
 		Graphe g;
 		Decoupeur d(fichierLog);
-		string* requete;
-		string* referer;
 		while(d.EstOK())
 		{
 			d.LigneSuivante();
 			if ( d.EstOK ( ) )
 			{
-				requete = d.DecouperRequete();
-				referer = d.DecouperReferer();
-				g.Ajouter ( requete , referer );
+				g.Ajouter ( d.DecouperRequete ( ) , d.DecouperReferer ( ) );
 			}
 		}
-		//g.Afficher();
 		g.afficherTop();
 	}
 } //----- fin de Nom

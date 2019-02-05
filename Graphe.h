@@ -65,6 +65,12 @@ public:
     //
 
 	void afficherTop ();
+	// Mode d'emploi :
+	//		Affiche les 10 cibles les plus utilisées.
+	//		S'il y a moins de 10 cibles dans le log, alors seules ces cibles
+	//		sont affichées.
+	// Contrat :
+	//
 
 //------------------------------------------------- Surcharge d'opérateurs
 
