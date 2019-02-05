@@ -75,9 +75,19 @@ public:
 
 protected:
 //----------------------------------------------------- Méthodes protégées
-
+	string * InsererString(string * value);
+	// Mode d'emploi :
+	// 	Teste si la string dont le pointeur est passé en paramètre
+	// 	se trouve dans mapStrings. Si oui, elle libère la mémoire 
+	// 	de la chaîne passée en paramètre, et retourne le pointeur
+	// 	associé à la chaîne équivalente déjà stockée.
+	// 	Si la chaîne n'est pas dans mapStrings, elle est insérée
+	// 	dedans et la fonction retourne le même pointeur que celui
+	// 	passé en paramètre.
+	
 //----------------------------------------------------- Attributs protégés
 	unordered_map<string*,noeud> mapArc;
+	unordered_map<string, string*> mapStrings;
 	vector<string*> adresses;
 };
 

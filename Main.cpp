@@ -84,7 +84,8 @@ int main(int argc, char * argv[])
 		{
 			d.LigneSuivante();
 			//cout << *(d.DecouperReferer()) << " : " << *(d.DecouperRequete()) << endl;
-			g.Ajouter(d.DecouperRequete(), d.DecouperReferer());
+			if(d.EstOK())
+				g.Ajouter(d.DecouperRequete(), d.DecouperReferer());
 		}
 		g.Afficher();
 	}
