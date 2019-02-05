@@ -39,6 +39,8 @@ void Graphe::Afficher() const
 
 void Graphe::Ajouter(string * cible, string * ref)
 {
+	cible = InsererString(cible);
+	ref = InsererString(ref);
 	unordered_map<string *, noeud>::iterator it = mapArc.find(cible);
 	if( it == mapArc.end())
 	{
@@ -62,7 +64,6 @@ void Graphe::Ajouter(string * cible, string * ref)
 			(*itRef).second ++;
 		}
 	}
-
 
 }
 
@@ -91,3 +92,20 @@ Graphe::~Graphe ( )
 
 //----------------------------------------------------- Méthodes protégées
 
+string * Graphe::InsererString(string * value)
+{
+	string * pointer;
+	unordered_map<string, string*>::iterator it = mapStrings.find(*value);
+	if(it == mapStrings.end())
+	{
+		pair<string, string *> p(*value, value);
+		mapStrings.insert(p); //TODO: vérifier qu'il n'y a pas de copie !
+		pointer = value;
+	}
+	else
+	{
+		delete value;
+		pointer = (*it).second;
+	}
+	return pointer;
+}
