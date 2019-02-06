@@ -47,6 +47,7 @@ int main(int argc, char * argv[])
 	string nomGraph;
 	string fichierLog;
 	int heure;
+	Graphe g;
 
 	int i = 1;
 	while(i < argc)
@@ -74,19 +75,59 @@ int main(int argc, char * argv[])
 		++i;
 	}
 
-	if(fichierLogConnu)
+	if ( exclureImg && fichierLogConnu)
 	{
-		Graphe g;
-		Decoupeur d(fichierLog);
-		while(d.EstOK())
+		opeExclu ( fichierLog, g);
+	}
+	else if ( fichierLogConnu )
+	{
+		opeSansArg ( fichierLog , g );
+	}
+
+	g.afficherTop();
+} //----- fin de Main
+
+
+Graphe opeSansArg (string nomFichier, Graphe & graphMod )
+{
+	Decoupeur d ( nomFichier );
+	while ( d.EstOK ( ) )
+	{
+		d.LigneSuivante ( );
+		if ( d.EstOK ( ) )
 		{
-			d.LigneSuivante();
-			if ( d.EstOK ( ) )
+			graphMod.Ajouter ( d.DecouperRequete ( ) , d.DecouperReferer ( ) );
+		}
+	}
+
+	return graphMod;
+}
+
+Graphe opeExclu (string nomFichier, Graphe & graphMod )
+{
+	string requete;
+	Decoupeur d ( nomFichier );
+	while ( d.EstOK ( ) )
+	{
+		d.LigneSuivante ( );
+		if ( d.EstOK ( ))
+		{
+			requete = *( d.DecouperRequete ( ) );
+			if ( strlen ( &requete [ 0 ] ) > 5 )
 			{
-				g.Ajouter ( d.DecouperRequete ( ) , d.DecouperReferer ( ) );
+				requete = requete.substr ( strlen ( &requete [ 0 ] ) - 5 , 5 );
+			}
+
+			if ( requete.find ( ".js" ) == string::npos && requete.find ( ".jpg" ) == string::npos
+				 && requete.find ( ".jpeg" ) == string::npos && requete.find ( ".png" ) == string::npos
+				 && requete.find ( ".css" ) == string::npos && requete.find ( ".bmp" ) == string::npos
+				 && requete.find ( ".png" ) == string::npos && requete.find ( ".gif" ) == string::npos
+				 && requete.find ( ".ico" ) == string::npos )
+			{
+				graphMod.Ajouter ( d.DecouperRequete ( ) , d.DecouperReferer ( ) );
 			}
 		}
-		g.afficherTop();
 	}
-} //----- fin de Nom
 
+	return graphMod;
+}
