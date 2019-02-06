@@ -45,22 +45,40 @@ int main ( int argc , char * argv [ ] )
 	bool avecGraph = false;
 	bool selecHeure = false;
 	bool fichierLogConnu = false;
+
 	string nomGraph;
 	string fichierLog;
+
 	int heure;
 	Graphe g;
+
+	if ( argc == 1 )
+	{
+		cout << "L'execution de ce programme nécessite des arguments" << endl;
+		cout << "Voici les synthaxes possibles :" << endl;
+		cout << "./main nomLog.log" << endl;
+		cout << "./main -t xx nomLog.log (avec xx entre 00 et 23)" << endl;
+		cout << "./main -g nomGraph.dot nomLog.log" << endl;
+		cout << "./main -e nomLog.log" << endl;
+
+		return 0;
+	}
 
 	int i = 1;
 	while ( i < argc )
 	{
 		string arg ( argv [ i ] );
-		if ( arg == "-g" )
+		if ( arg == "-g" ) //TODO : vérifier qu'on a le droit d'écrire 
 		{
+			if ( i < argc ) //TODO : Idiot Proof s'il oublie le nom...
+			{
+				nomGraph = argv [ ++i ];
+			}
 			avecGraph = true;
 		}
 		else if ( arg == "-e" )
 		{
-			cout << "Les images et les fichiers web sont exclus." << endl;
+			cout << "Les images et les fichiers web seront exclus." << endl;
 			exclureImg = true;
 		}
 		else if ( arg == "-t" )
@@ -68,14 +86,34 @@ int main ( int argc , char * argv [ ] )
 			selecHeure = true;
 			if ( i < argc )
 			{
-				heure = stoi ( argv [ ++i ] );
+				try
+				{
+					heure = stoi ( argv [ ++i ] );
+				}
+				catch ( std::invalid_argument& e )
+				{
+					cout << "L'heure est mal formatée." << endl;
+					cout << "Ce paramètre a été ignoré." << endl;
+					--i;
+					selecHeure = false;
+				}
 			}
 		}
 		else
 		{
-			cout << "Votre fichier a bien été analysé." << endl;
+			cout << "Votre fichier est en cours d'analyse." << endl;
 			fichierLogConnu = true;
-			fichierLog = argv [ i ];
+			fichierLog = argv[i];
+			if ( fichierLog.find ( ".log" ) != string::npos )
+			{
+				fichierLog = argv [ i ];
+			}
+			else
+			{
+				cout << "Le fichier log ne possède pas le bon format (.log exigé)" << endl;
+				cout << "Veuillez reessayer" << endl;
+				return 0;
+			}
 		}
 
 		++i;
