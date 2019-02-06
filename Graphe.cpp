@@ -110,6 +110,10 @@ Graphe::~Graphe ( )
 #ifdef MAP
     cout << "Appel au destructeur de <Graphe>" << endl;
 #endif
+	for(catAdresse::iterator it = adresses.begin(); it != adresses.end(); ++it)
+	{
+		delete (it->second);
+	}
 } //----- Fin de ~Graphe
 
 
