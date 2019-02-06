@@ -85,7 +85,7 @@ Decoupeur::~Decoupeur ( )
 
 void Decoupeur::DecouperLigne()
 {
-	char separateurs [] = { '[', ']', ' ', '"', ' ', ' ', '"', ' ', '"', '"', '"', '"' };
+	char separateurs [] = {':', ':', ' ', '"', ' ', ' ', '"', ' ', '"', '"', '"', '"' };
 	int indexSep = 0;
 	char tampon;
 	string motTampon;

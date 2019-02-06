@@ -1,9 +1,9 @@
 /*************************************************************************
-                           Main  -  description
-                             -------------------
-    début                : $DATE$
-    copyright            : (C) $YEAR$ par $AUTHOR$
-    e-mail               : $EMAIL$
+						   Main  -  description
+							 -------------------
+	début                : $DATE$
+	copyright            : (C) $YEAR$ par $AUTHOR$
+	e-mail               : $EMAIL$
 *************************************************************************/
 
 //---------- Réalisation du module <Main> (fichier Main.cpp) ---------------
@@ -38,8 +38,9 @@ using namespace std;
 
 //////////////////////////////////////////////////////////////////  PUBLIC
 //---------------------------------------------------- Fonctions publiques
-int main(int argc, char * argv[])
+int main ( int argc , char * argv [ ] )
 {
+	bool avecArg = false;
 	bool exclureImg = false;
 	bool avecGraph = false;
 	bool selecHeure = false;
@@ -50,45 +51,60 @@ int main(int argc, char * argv[])
 	Graphe g;
 
 	int i = 1;
-	while(i < argc)
+	while ( i < argc )
 	{
-		string arg(argv[i]);
-		if(arg == "-g")
+		string arg ( argv [ i ] );
+		if ( arg == "-g" )
 		{
 			avecGraph = true;
 		}
-		else if(arg == "-e")
+		else if ( arg == "-e" )
 		{
-			cout << "Il faut exclure les images." << endl;
+			cout << "Les images et les fichiers web sont exclus." << endl;
 			exclureImg = true;
 		}
-		else if(arg == "-t")
+		else if ( arg == "-t" )
 		{
 			selecHeure = true;
+			if ( i < argc )
+			{
+				heure = stoi ( argv [ ++i ] );
+			}
 		}
 		else
 		{
+			cout << "Votre fichier a bien été analysé." << endl;
 			fichierLogConnu = true;
-			fichierLog = argv[i];
+			fichierLog = argv [ i ];
 		}
 
 		++i;
 	}
 
-	if ( exclureImg && fichierLogConnu)
+	if ( exclureImg && fichierLogConnu )
 	{
-		opeExclu ( fichierLog, g);
+		opeExclu ( fichierLog , g );
+		avecArg = true;
 	}
-	else if ( fichierLogConnu )
+
+	if ( selecHeure && fichierLogConnu )
+	{
+		opeHeure ( fichierLog , g, heure );
+		avecArg = true;
+	}
+
+	if ( fichierLogConnu && !avecArg )
 	{
 		opeSansArg ( fichierLog , g );
 	}
 
-	g.afficherTop();
+	g.afficherTop ( );
+
+	return 0;
 } //----- fin de Main
 
 
-Graphe opeSansArg (string nomFichier, Graphe & graphMod )
+Graphe opeSansArg ( string nomFichier , Graphe & graphMod )
 {
 	Decoupeur d ( nomFichier );
 	while ( d.EstOK ( ) )
@@ -103,14 +119,33 @@ Graphe opeSansArg (string nomFichier, Graphe & graphMod )
 	return graphMod;
 }
 
-Graphe opeExclu (string nomFichier, Graphe & graphMod )
+Graphe opeHeure ( string nomFichier , Graphe & graphMod, int heure )
+{
+	Decoupeur d ( nomFichier );
+	while ( d.EstOK ( ) )
+	{
+		d.LigneSuivante ( );
+		if ( d.EstOK ( ) )
+		{
+			int heureLigne = stoi ( *(d.DecouperDate ( )) );
+			if (heure == heureLigne)
+			{
+				graphMod.Ajouter ( d.DecouperRequete ( ) , d.DecouperReferer ( ) );
+			}
+		}
+	}
+
+	return graphMod;
+}
+
+Graphe opeExclu ( string nomFichier , Graphe & graphMod )
 {
 	string requete;
 	Decoupeur d ( nomFichier );
 	while ( d.EstOK ( ) )
 	{
 		d.LigneSuivante ( );
-		if ( d.EstOK ( ))
+		if ( d.EstOK ( ) )
 		{
 			requete = *( d.DecouperRequete ( ) );
 			if ( strlen ( &requete [ 0 ] ) > 5 )
@@ -119,10 +154,9 @@ Graphe opeExclu (string nomFichier, Graphe & graphMod )
 			}
 
 			if ( requete.find ( ".js" ) == string::npos && requete.find ( ".jpg" ) == string::npos
-				 && requete.find ( ".jpeg" ) == string::npos && requete.find ( ".png" ) == string::npos
-				 && requete.find ( ".css" ) == string::npos && requete.find ( ".bmp" ) == string::npos
-				 && requete.find ( ".png" ) == string::npos && requete.find ( ".gif" ) == string::npos
-				 && requete.find ( ".ico" ) == string::npos )
+				 && requete.find ( ".jpeg" ) == string::npos && requete.find ( ".css" ) == string::npos
+				 && requete.find ( ".bmp" ) == string::npos && requete.find ( ".png" ) == string::npos
+				 && requete.find ( ".gif" ) == string::npos && requete.find ( ".ico" ) == string::npos )
 			{
 				graphMod.Ajouter ( d.DecouperRequete ( ) , d.DecouperReferer ( ) );
 			}
