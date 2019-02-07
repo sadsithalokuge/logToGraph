@@ -24,13 +24,16 @@ using namespace std;
 //----------------------------------------------------- Méthodes publiques
 void Decoupeur::LigneSuivante() 
 {//TODO: rajouter des filtres pour la selection.
+	bool conforme = true;
 	if(fichier)
 	{
 		do
 		{
 			getline(fichier, ligneActuelle);
 			DecouperLigne();
-		}while(fichier && !filtre->LigneEstConforme(infos));
+			if(filtre != nullptr)
+				conforme = filtre->LigneEstConforme(infos);
+		}while(fichier && !conforme);
 	}
 } //----- Fin de Méthode
 
