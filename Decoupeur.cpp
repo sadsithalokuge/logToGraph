@@ -26,8 +26,11 @@ void Decoupeur::LigneSuivante()
 {//TODO: rajouter des filtres pour la selection.
 	if(fichier)
 	{
-		getline(fichier, ligneActuelle);
-		DecouperLigne();
+		do
+		{
+			getline(fichier, ligneActuelle);
+			DecouperLigne();
+		}while(fichier && !filtre->LigneEstConforme(infos));
 	}
 } //----- Fin de Méthode
 
@@ -56,16 +59,32 @@ bool Decoupeur::EstOK() const
 	return fichier.good();
 }
 
+/*
+bool Decoupeur::FiltresOK() const
+{
+	bool ligneConforme = true;
+	for(list<Filtre>::const_iterator it = filtres.begin(); it != filtres.end(); it++)
+	{
+		if(it->LigneEstConforme(infos) == false)
+		{
+			ligneConforme = false;
+			break;
+		}
+	}
+
+	return ligneConforme;
+}
+*/
 //------------------------------------------------- Surcharge d'opérateurs
 
 //-------------------------------------------- Constructeurs - destructeur
 
-Decoupeur::Decoupeur(string nomFichier) : fichier(nomFichier), ligneActuelle("")
+Decoupeur::Decoupeur(string nomFichier, Filtre * critere) : fichier(nomFichier), ligneActuelle(""), filtre(critere)
 {
 #ifdef MAP
     cout << "Appel au constructeur de <Decoupeur>" << endl;
 #endif
-} //----- Fin de Decoupeur
+}
 
 
 Decoupeur::~Decoupeur ( )
@@ -76,6 +95,7 @@ Decoupeur::~Decoupeur ( )
     cout << "Appel au destructeur de <Decoupeur>" << endl;
 #endif
     fichier.close();
+    delete filtre;
 } //----- Fin de ~Decoupeur
 
 
