@@ -74,12 +74,6 @@ public:
     // 		Retourne un booléen indiquant si le Découpeur peut
     // 		continuer à lire dans le le fichier.
 
-    //bool FiltresOK() const;
-    // Mode d'emploi :
-    // 		Retourne un booléen indiquant si la ligne courante
-    // 		traitée par le Découpeur est conforme aux critère
-    // 		de sélection des filtres.
-
 //------------------------------------------------- Surcharge d'opérateurs
 
 

@@ -23,7 +23,7 @@ using namespace std;
 
 //----------------------------------------------------- Méthodes publiques
 void Decoupeur::LigneSuivante() 
-{//TODO: rajouter des filtres pour la selection.
+{
 	bool conforme = true;
 	if(fichier)
 	{
@@ -62,22 +62,6 @@ bool Decoupeur::EstOK() const
 	return fichier.good();
 }
 
-/*
-bool Decoupeur::FiltresOK() const
-{
-	bool ligneConforme = true;
-	for(list<Filtre>::const_iterator it = filtres.begin(); it != filtres.end(); it++)
-	{
-		if(it->LigneEstConforme(infos) == false)
-		{
-			ligneConforme = false;
-			break;
-		}
-	}
-
-	return ligneConforme;
-}
-*/
 //------------------------------------------------- Surcharge d'opérateurs
 
 //-------------------------------------------- Constructeurs - destructeur
