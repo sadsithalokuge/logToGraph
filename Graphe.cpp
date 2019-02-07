@@ -138,3 +138,4 @@ string * Graphe::InsererString(string * value)
 	}
 	return pointer;
 }
+
