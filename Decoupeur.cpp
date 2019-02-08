@@ -24,16 +24,13 @@ using namespace std;
 //----------------------------------------------------- Méthodes publiques
 void Decoupeur::LigneSuivante() 
 {
-	bool conforme = true;
 	if(fichier)
 	{
 		do
 		{
 			getline(fichier, ligneActuelle);
 			DecouperLigne();
-			if(filtre != nullptr)
-				conforme = filtre->LigneEstConforme(infos);
-		}while(fichier && !conforme);
+		}while(fichier && !FiltresOK());
 	}
 } //----- Fin de Méthode
 
@@ -62,11 +59,28 @@ bool Decoupeur::EstOK() const
 	return fichier.good();
 }
 
+bool Decoupeur::FiltresOK() const
+{
+	bool conforme = true;
+	if(ListeFiltres != nullptr)
+	{
+		for(list<Filtre *>::iterator it = ListeFiltres->begin(); it != ListeFiltres->end(); ++it)
+		{
+			if(!(*it)->LigneEstConforme(infos))
+			{
+				conforme = false;
+				break;
+			}
+		}
+	}
+	return conforme;
+}
+
 //------------------------------------------------- Surcharge d'opérateurs
 
 //-------------------------------------------- Constructeurs - destructeur
 
-Decoupeur::Decoupeur(string nomFichier, Filtre * critere) : fichier(nomFichier), ligneActuelle(""), filtre(critere)
+Decoupeur::Decoupeur(string nomFichier, list<Filtre *> * liste) : fichier(nomFichier), ligneActuelle(""), ListeFiltres(liste)
 {
 #ifdef MAP
     cout << "Appel au constructeur de <Decoupeur>" << endl;
@@ -82,7 +96,14 @@ Decoupeur::~Decoupeur ( )
     cout << "Appel au destructeur de <Decoupeur>" << endl;
 #endif
     fichier.close();
-    delete filtre;
+    if(ListeFiltres != nullptr)
+    {
+    	for(list<Filtre*>::iterator it = ListeFiltres->begin(); it != ListeFiltres->end(); ++it)
+    	{
+		delete (*it);
+    	}
+    	delete ListeFiltres;
+    }
 } //----- Fin de ~Decoupeur
 
 

@@ -74,12 +74,18 @@ public:
     // 		Retourne un booléen indiquant si le Découpeur peut
     // 		continuer à lire dans le le fichier.
 
+    bool FiltresOK() const;
+    // Mode d'emploi :
+    // 		Retourne un booléen indiquant si la ligne actuelle
+    // 		stockée dans le Decoupeur satisfait les critères des
+    // 		filtres.
+
 //------------------------------------------------- Surcharge d'opérateurs
 
 
 //-------------------------------------------- Constructeurs - destructeur
 
-    Decoupeur(string nomFichier, Filtre * critere = nullptr);
+    Decoupeur(string nomFichier, list<Filtre *> * liste = nullptr);
 
     virtual ~Decoupeur();
 
@@ -92,7 +98,7 @@ protected:
 	ifstream fichier;
 	string ligneActuelle;
 	vector<string> infos;
-	Filtre * filtre;
+	list<Filtre *> * ListeFiltres;
 };
 
 //-------------------------------- Autres définitions dépendantes de <Decoupeur>
