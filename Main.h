@@ -37,10 +37,14 @@ list<Filtre *> * insererFiltre(list<Filtre *> * liste, Filtre * f);
 // 	Si celui-ci vaut nullptr, l'espace mémoire nécessaire
 // 	est alloué pour la liste.
 
-void lireLog(string nomFichier, list<Filtre *> * filtres);
+void lireLog(string nomFichier, list<Filtre *> * filtres, string nomGraphe = "");
 // Mode d'emploi :
 // 	Analyse le contenu du fichier .log fourni en paramètre
 // 	en fonction des filtres passés en paramètre.
 
+void afficherSyntaxe();
+// Mode d'emploi :
+// 	Affiche l'aide d'utilisation du programme, en particulier la
+// 	liste des arguments possibles.
 #endif // MAIN_H
 

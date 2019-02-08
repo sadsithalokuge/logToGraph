@@ -42,24 +42,15 @@ using namespace std;
 //---------------------------------------------------- Fonctions publiques
 int main ( int argc , char * argv [ ] )
 {
-	bool fichierLogConnu = false;
-	bool avecGraph;
-	string nomGraph;
-	string fichierLog;
+	string nomGraph("");
+	string fichierLog("");
 
 	int heure;
-	Graphe g;
 	list<Filtre *> * filtres = nullptr;
 
 	if ( argc == 1 )
 	{
-		cout << "L'execution de ce programme nécessite des arguments" << endl;
-		cout << "Voici les synthaxes possibles :" << endl;
-		cout << "./main nomLog.log" << endl;
-		cout << "./main -t xx nomLog.log (avec xx entre 00 et 23)" << endl;
-		cout << "./main -g nomGraph.dot nomLog.log" << endl;
-		cout << "./main -e nomLog.log" << endl;
-
+		afficherSyntaxe();
 		return 0;
 	}
 
@@ -67,13 +58,9 @@ int main ( int argc , char * argv [ ] )
 	while ( i < argc )
 	{
 		string arg ( argv [ i ] );
-		if ( arg == "-g" ) //TODO : vérifier qu'on a le droit d'écrire 
+		if ( arg == "-g" && i < argc)
 		{
-			if ( i < argc ) //TODO : Idiot Proof s'il oublie le nom...
-			{
-				nomGraph = argv [ ++i ];
-			}
-			avecGraph = true;
+			nomGraph = argv [ ++i ];
 		}
 		else if ( arg == "-e" )
 		{
@@ -82,9 +69,9 @@ int main ( int argc , char * argv [ ] )
 			Filtre * f = new FiltreExtensions(extensions, length);
 			filtres = insererFiltre(filtres, f);
 
-			cout << "Les images et les fichiers web seront exclus." << endl;
+			cout << "Exclusion des images et fichiers web." << endl;
 		}
-		else if ( arg == "-t" )
+		else if ( arg == "-t")
 		{
 			if ( i < argc )
 			{
@@ -96,30 +83,28 @@ int main ( int argc , char * argv [ ] )
 				}
 				catch ( std::invalid_argument& e )
 				{
-					cout << "L'heure est mal formatée." << endl;
-					cout << "Ce paramètre a été ignoré." << endl;
-					--i;
+					cout << "ERREUR : L'heure est mal formatée." << endl;
+					cout << "Merci de prendre connaissance de la syntaxe :" << endl;
+					afficherSyntaxe();
+					return 0;	
 				}
 			}
 		}
 		else
 		{
-			cout << "Votre fichier est en cours d'analyse." << endl;
-			fichierLogConnu = true;
 			fichierLog = argv[i];
 			if ( fichierLog.find ( ".log" ) == string::npos )
 			{
-				cout << "Le fichier log ne possède pas le bon format (.log exigé)" << endl;
-				cout << "Veuillez reessayer" << endl;
-				return 0;
+				cout << "ATTENTION : Le fichier spécifié n'est pas au format .log" << endl
+					<< "Il est possible que le programme ne fonctionne pas correctement." << endl;
 			}
 		}
 
 		++i;
 	}
 
-	if(fichierLogConnu)
-		lireLog(fichierLog, filtres);
+	if(fichierLog != "")
+		lireLog(fichierLog, filtres, nomGraph);
 	return 0;
 } //----- fin de Main
 
@@ -132,7 +117,7 @@ list<Filtre *> * insererFiltre(list<Filtre *> * liste, Filtre * f)
 	return liste;
 }
 
-void lireLog(string nomFichier, list<Filtre *> * filtres)
+void lireLog(string nomFichier, list<Filtre *> * filtres, string nomGraphe)
 {
 	Graphe g;
 	Decoupeur d(nomFichier, filtres);
@@ -143,4 +128,17 @@ void lireLog(string nomFichier, list<Filtre *> * filtres)
 			g.Ajouter(d.DecouperRequete(), d.DecouperReferer());
 	}
 	g.afficherTop();
+
+	if(nomGraphe != "")
+		g.GenererFichierGraphe(nomGraphe);
+}
+
+void afficherSyntaxe()
+{
+	cout << "L'execution de ce programme nécessite des arguments" << endl;
+	cout << "Voici les synthaxes possibles :" << endl;
+	cout << "./main nomLog.log" << endl;
+	cout << "./main -t xx nomLog.log (avec xx entre 00 et 23)" << endl;
+	cout << "./main -g nomGraph.dot nomLog.log" << endl;
+	cout << "./main -e nomLog.log" << endl;
 }
