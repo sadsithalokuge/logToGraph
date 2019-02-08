@@ -6,7 +6,7 @@ _obj= a_Main.o a_Decoupeur.o a_Graphe.o a_Filtre.o
 binDir=bin/
 obj=$(subst a_, $(binDir), $(_obj)) 
 
-comp=g++ -ansi -pedantic -Wall -std=c++11 -g #-D MAP
+comp=g++ -ansi -pedantic -Wall -std=c++11 -g -D MAP
 edl=-lm
 
 $(exe) : $(obj)

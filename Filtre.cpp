@@ -8,7 +8,7 @@ e-mail :
 
 //------------- Include système ------------------------------------------------------------
 #include <cstring>
-
+#include <iostream>
 using namespace std;
 
 //------------- Include personnel ----------------------------------------------------------
