@@ -13,11 +13,13 @@
 #include <iostream>
 #include <string>
 #include <cstring>
+#include <list>
 using namespace std;
 //------------------------------------------------------ Include personnel
 #include "Main.h"
 #include "Decoupeur.h"
 #include "Graphe.h"
+#include "Filtre.h"
 ///////////////////////////////////////////////////////////////////  PRIVE
 //------------------------------------------------------------- Constantes
 
@@ -177,25 +179,19 @@ void opeHeure ( string nomFichier , Graphe & graphMod, int heure )
 void opeExclu ( string nomFichier , Graphe & graphMod )
 {
 	string requete;
-	Decoupeur d ( nomFichier );
+	string extensions[] = { ".js", ".jpg", ".jpeg", ".css", ".bmp", ".png", ".gif", ".ico" };
+	unsigned int length = 8;
+	list<Filtre *> * filtres = new list<Filtre *>();
+	Filtre * f = new FiltreExtensions(extensions, length);
+	filtres->insert(filtres->begin(), f);
+	
+	Decoupeur d ( nomFichier, filtres );
 	while ( d.EstOK ( ) )
 	{
 		d.LigneSuivante ( );
 		if ( d.EstOK ( ) )
 		{
-			requete = *( d.DecouperRequete ( ) );
-			if ( strlen ( &requete [ 0 ] ) > 5 )
-			{
-				requete = requete.substr ( strlen ( &requete [ 0 ] ) - 5 , 5 );
-			}
-
-			if ( requete.find ( ".js" ) == string::npos && requete.find ( ".jpg" ) == string::npos
-				 && requete.find ( ".jpeg" ) == string::npos && requete.find ( ".css" ) == string::npos
-				 && requete.find ( ".bmp" ) == string::npos && requete.find ( ".png" ) == string::npos
-				 && requete.find ( ".gif" ) == string::npos && requete.find ( ".ico" ) == string::npos )
-			{
-				graphMod.Ajouter ( d.DecouperRequete ( ) , d.DecouperReferer ( ) );
-			}
+			graphMod.Ajouter(d.DecouperRequete(), d.DecouperReferer());
 		}
 	}
 

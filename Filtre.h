@@ -55,4 +55,23 @@ class FiltreHeure : public Filtre
 		int Heure;
 };
 
+
+class FiltreExtensions : public Filtre
+{
+	public:
+		//----- Methodes publiques -----
+		virtual bool LigneEstConforme(const std::vector<std::string> infos) const;
+
+		//--- Constructeurs - Destructeurs ---
+		FiltreExtensions(string * extensions, unsigned int length);
+		// Mode d'emploi :
+		// 	Construit un objet en copiant le contenu dans le tableau fourni
+		// 	en paramètre dans ExtensionsInterdites.
+
+		virtual ~FiltreExtensions();
+
+	private:
+		unsigned int NbExtensions;
+		string * ExtensionsInterdites;
+};
 #endif // ! defined ( FILTRE_H )

@@ -25,6 +25,24 @@ bool FiltreHeure::LigneEstConforme(const vector<string> infos) const
 	return (h == Heure);	
 }
 
+bool FiltreExtensions::LigneEstConforme(const vector<string> infos) const
+{
+	bool conforme = true;
+	for(unsigned int i = 0; i < NbExtensions; ++i)
+	{
+		int p = infos[2].size() - ExtensionsInterdites[i].size();
+		//Calcul de la position à laquelle se trouve l'extension.
+		string ext = infos[2].substr(p, infos[2].size());
+		if(ext == ExtensionsInterdites[i])
+		{
+			conforme = false;
+			break;
+		}
+	}
+
+	return conforme;
+}
+
 //------------- Surcharge d'opérateurs -----------------------------------------------------
 
 //------------- Constructeurs - Destructeur ------------------------------------------------
@@ -42,6 +60,19 @@ FiltreHeure::FiltreHeure(int heure) : Filtre(), Heure(heure)
 #endif
 }
 
+FiltreExtensions::FiltreExtensions(string * extensions, unsigned int length)
+	: Filtre(), NbExtensions(length)
+{
+#ifdef MAP
+	cout << "Appel du constructeur de <FiltreExtensions>." << endl;
+#endif
+	ExtensionsInterdites = new string[NbExtensions];
+	for(unsigned int i = 0; i < NbExtensions; ++i)
+	{
+		ExtensionsInterdites[i] = extensions[i];
+	}
+}
+
 Filtre::~Filtre()
 {
 #ifdef MAP
@@ -54,5 +85,13 @@ FiltreHeure::~FiltreHeure()
 #ifdef MAP
 	cout << "Appel du destructeur de <FiltreHeure>." << endl;
 #endif
+}
+
+FiltreExtensions::~FiltreExtensions()
+{
+#ifdef MAP
+	cout << "Appel du destructeur de <FiltreHeure>." << endl;
+#endif
+	delete [] ExtensionsInterdites;
 }
 //------------- Methodes protégées ---------------------------------------------------------
