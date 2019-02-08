@@ -19,7 +19,7 @@ using namespace std;
 #include "Main.h"
 #include "Decoupeur.h"
 #include "Graphe.h"
-#include "Filtre.h"
+
 ///////////////////////////////////////////////////////////////////  PRIVE
 //------------------------------------------------------------- Constantes
 
@@ -42,17 +42,14 @@ using namespace std;
 //---------------------------------------------------- Fonctions publiques
 int main ( int argc , char * argv [ ] )
 {
-	bool avecArg = false;
-	bool exclureImg = false;
-	bool avecGraph = false;
-	bool selecHeure = false;
 	bool fichierLogConnu = false;
-
+	bool avecGraph;
 	string nomGraph;
 	string fichierLog;
 
 	int heure;
 	Graphe g;
+	list<Filtre *> * filtres = nullptr;
 
 	if ( argc == 1 )
 	{
@@ -80,24 +77,28 @@ int main ( int argc , char * argv [ ] )
 		}
 		else if ( arg == "-e" )
 		{
+			string extensions[] = { ".js", ".jpg", ".jpeg", ".css", ".bmp", ".png", ".gif", ".ico" };
+			unsigned int length = 8;
+			Filtre * f = new FiltreExtensions(extensions, length);
+			filtres = insererFiltre(filtres, f);
+
 			cout << "Les images et les fichiers web seront exclus." << endl;
-			exclureImg = true;
 		}
 		else if ( arg == "-t" )
 		{
-			selecHeure = true;
 			if ( i < argc )
 			{
 				try
 				{
 					heure = stoi ( argv [ ++i ] );
+					Filtre * f = new FiltreHeure(heure);
+					filtres = insererFiltre(filtres, f);
 				}
 				catch ( std::invalid_argument& e )
 				{
 					cout << "L'heure est mal formatée." << endl;
 					cout << "Ce paramètre a été ignoré." << endl;
 					--i;
-					selecHeure = false;
 				}
 			}
 		}
@@ -106,11 +107,7 @@ int main ( int argc , char * argv [ ] )
 			cout << "Votre fichier est en cours d'analyse." << endl;
 			fichierLogConnu = true;
 			fichierLog = argv[i];
-			if ( fichierLog.find ( ".log" ) != string::npos )
-			{
-				fichierLog = argv [ i ];
-			}
-			else
+			if ( fichierLog.find ( ".log" ) == string::npos )
 			{
 				cout << "Le fichier log ne possède pas le bon format (.log exigé)" << endl;
 				cout << "Veuillez reessayer" << endl;
@@ -121,78 +118,29 @@ int main ( int argc , char * argv [ ] )
 		++i;
 	}
 
-	if ( exclureImg && fichierLogConnu )
-	{
-		opeExclu ( fichierLog , g );
-		avecArg = true;
-	}
-
-	if ( selecHeure && fichierLogConnu )
-	{
-		opeHeure ( fichierLog , g, heure );
-		avecArg = true;
-	}
-
-	if ( fichierLogConnu && !avecArg )
-	{
-		opeSansArg ( fichierLog , g );
-	}
-
-	g.afficherTop ( );
-
+	if(fichierLogConnu)
+		lireLog(fichierLog, filtres);
 	return 0;
 } //----- fin de Main
 
-
-void opeSansArg ( string nomFichier , Graphe & graphMod )
+list<Filtre *> * insererFiltre(list<Filtre *> * liste, Filtre * f)
 {
-	Decoupeur d ( nomFichier );
-	while ( d.EstOK ( ) )
-	{
-		d.LigneSuivante ( );
-		if ( d.EstOK ( ) )
-		{
-			graphMod.Ajouter ( d.DecouperRequete ( ) , d.DecouperReferer ( ) );
-		}
-	}
-
-}
-
-void opeHeure ( string nomFichier , Graphe & graphMod, int heure )
-{
-	Decoupeur d ( nomFichier );
-	while ( d.EstOK ( ) )
-	{
-		d.LigneSuivante ( );
-		if ( d.EstOK ( ) )
-		{
-			int heureLigne = stoi ( *(d.DecouperDate ( )) );
-			if (heure == heureLigne)
-			{
-				graphMod.Ajouter ( d.DecouperRequete ( ) , d.DecouperReferer ( ) );
-			}
-		}
-	}
-
-}
-
-void opeExclu ( string nomFichier , Graphe & graphMod )
-{
-	string requete;
-	string extensions[] = { ".js", ".jpg", ".jpeg", ".css", ".bmp", ".png", ".gif", ".ico" };
-	unsigned int length = 8;
-	list<Filtre *> * filtres = new list<Filtre *>();
-	Filtre * f = new FiltreExtensions(extensions, length);
-	filtres->insert(filtres->begin(), f);
+	if(liste == nullptr)
+		liste = new list<Filtre *>();
 	
-	Decoupeur d ( nomFichier, filtres );
-	while ( d.EstOK ( ) )
-	{
-		d.LigneSuivante ( );
-		if ( d.EstOK ( ) )
-		{
-			graphMod.Ajouter(d.DecouperRequete(), d.DecouperReferer());
-		}
-	}
+	liste->insert(liste->begin(), f);
+	return liste;
+}
 
+void lireLog(string nomFichier, list<Filtre *> * filtres)
+{
+	Graphe g;
+	Decoupeur d(nomFichier, filtres);
+	while(d.EstOK())
+	{
+		d.LigneSuivante();
+		if(d.EstOK())
+			g.Ajouter(d.DecouperRequete(), d.DecouperReferer());
+	}
+	g.afficherTop();
 }
