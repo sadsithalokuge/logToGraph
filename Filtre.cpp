@@ -30,10 +30,8 @@ bool FiltreExtensions::LigneEstConforme(const vector<string> infos) const
 	bool conforme = true;
 	for(unsigned int i = 0; i < NbExtensions; ++i)
 	{
-		int p = infos[2].size() - ExtensionsInterdites[i].size();
-		//Calcul de la position à laquelle se trouve l'extension.
-		string ext = infos[2].substr(p, infos[2].size());
-		if(ext == ExtensionsInterdites[i])
+		
+		if(infos[2].find(ExtensionsInterdites[i]) != string::npos)
 		{
 			conforme = false;
 			break;
