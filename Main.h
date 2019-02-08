@@ -29,11 +29,11 @@ using namespace std;
 //---------------------------------------------------- Fonctions publiques
 int main(int argc, char * argv[]);
 
-Graphe opeSansArg (string nomFichier, Graphe & graphAModifier);
+void opeSansArg (string nomFichier, Graphe & graphAModifier);
 
-Graphe opeHeure ( string nomFichier , Graphe & graphMod , int heure );
+void opeHeure ( string nomFichier , Graphe & graphMod , int heure );
 
-Graphe opeExclu (string nomFichier , Graphe & graphAModifier);
+void opeExclu (string nomFichier , Graphe & graphAModifier);
 
 #endif // MAIN_H
 

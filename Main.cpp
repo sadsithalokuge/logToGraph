@@ -142,7 +142,7 @@ int main ( int argc , char * argv [ ] )
 } //----- fin de Main
 
 
-Graphe opeSansArg ( string nomFichier , Graphe & graphMod )
+void opeSansArg ( string nomFichier , Graphe & graphMod )
 {
 	Decoupeur d ( nomFichier );
 	while ( d.EstOK ( ) )
@@ -154,10 +154,9 @@ Graphe opeSansArg ( string nomFichier , Graphe & graphMod )
 		}
 	}
 
-	return graphMod;
 }
 
-Graphe opeHeure ( string nomFichier , Graphe & graphMod, int heure )
+void opeHeure ( string nomFichier , Graphe & graphMod, int heure )
 {
 	Decoupeur d ( nomFichier );
 	while ( d.EstOK ( ) )
@@ -173,10 +172,9 @@ Graphe opeHeure ( string nomFichier , Graphe & graphMod, int heure )
 		}
 	}
 
-	return graphMod;
 }
 
-Graphe opeExclu ( string nomFichier , Graphe & graphMod )
+void opeExclu ( string nomFichier , Graphe & graphMod )
 {
 	string requete;
 	Decoupeur d ( nomFichier );
@@ -201,5 +199,4 @@ Graphe opeExclu ( string nomFichier , Graphe & graphMod )
 		}
 	}
 
-	return graphMod;
 }
