@@ -13,6 +13,7 @@
 //-------------------------------------------------------- Include système
 #include <iostream>
 #include <string>
+#include <fstream>
 using namespace std;
 
 //------------------------------------------------------ Include personnel
@@ -92,6 +93,39 @@ void Graphe :: afficherTop ()
 	}
 }
 
+void ecrireDonneesNoeud(ofstream & fdot, const catArc::const_iterator & it, const catNode & donneesNoeud)
+{
+	for(catNode::const_iterator itNode = donneesNoeud.begin(); itNode != donneesNoeud.end(); ++itNode)
+	{
+		fdot << "\t\"" 
+			<< *(itNode->first) 
+			<< "\" -> \"" 
+			<< *(it->first)
+			<< "\" [label=\"" 
+			<< itNode->second 
+			<< "\"];\n";
+	}
+}
+
+void Graphe::GenererFichierGraphe(string nomFichier) const
+{
+	ofstream fdot(nomFichier, ofstream::out);
+	if(fdot)
+	{
+		fdot << "digraph {" << endl;
+		for(catArc::const_iterator it = mapArc.begin(); it != mapArc.end(); ++it)
+		{
+			fdot << "\t\"" << *(it->first) << "\";\n";
+			ecrireDonneesNoeud(fdot, it, (it->second).donneesNoeud);
+		}
+
+	}
+	fdot << "}";
+	fdot.close();
+}
+
+
+
 //------------------------------------------------- Surcharge d'opérateurs
 //-------------------------------------------- Constructeurs - destructeur
 
@@ -138,4 +172,3 @@ string * Graphe::InsererString(string * value)
 	}
 	return pointer;
 }
-

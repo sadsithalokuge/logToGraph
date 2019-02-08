@@ -70,7 +70,11 @@ public:
 	//		S'il y a moins de 10 cibles dans le log, alors seules ces cibles
 	//		sont affichées.
 	// Contrat :
-	//
+
+    void GenererFichierGraphe(string nomFichier) const;
+    // Mode d'emploi :
+    // 		Génère un fichier .dot dont le nom est fourni en
+    // 		paramètre.
 
 //------------------------------------------------- Surcharge d'opérateurs
 
