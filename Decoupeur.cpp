@@ -41,24 +41,12 @@ string * Decoupeur::DecouperDate() const
 
 string * Decoupeur::DecouperRequete ( ) const
 {
-	//Suppression des valeurs envoyées au serveur par methode GET.
-	//on se focalise sur la ressource demandée.
-	string * p;
-	unsigned int posGET = infos[2].find("?");
-	unsigned int posJSession = infos[2].find(";jsession");
-	if(posGET == string::npos && posJSession == string::npos)
-		p = new string(infos[2]); 
-	else
-	{
-		unsigned int posMin = min(posGET, posJSession);
-		p = new string(infos[2].substr(0, posMin));
-	}
-	return p;
+	return SansArguments(infos[2]);
 }
 
 string * Decoupeur::DecouperReferer ( ) const
 {
-	return new string(infos[4]);
+	return SansArguments(infos[4]);
 }
 
 string * Decoupeur::DecouperNavigateur() const
@@ -154,4 +142,23 @@ void Decoupeur::DecouperLigne()
 		}
 		++indexString;
 	}
+}
+
+string * Decoupeur::SansArguments(const string & url) const
+{
+	//Suppression des valeurs envoyées au serveur par methode GET
+	//et des jsession.
+	//on se focalise sur la ressource demandée.
+	string * p;
+	unsigned int posGET = url.find("?");
+	unsigned int posJSession = url.find(";jsession");
+	if(posGET == string::npos && posJSession == string::npos)
+		p = new string(url); 
+	else
+	{
+		unsigned int posMin = min(posGET, posJSession);
+		p = new string(url.substr(0, posMin));
+	}
+
+	return p;
 }

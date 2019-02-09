@@ -93,7 +93,8 @@ public:
 
 protected:
 //----------------------------------------------------- Méthodes protégées
-	void DecouperLigne();	
+	void DecouperLigne();
+	string * SansArguments(const string & url) const;	
 //----------------------------------------------------- Attributs protégés
 	ifstream fichier;
 	string ligneActuelle;
