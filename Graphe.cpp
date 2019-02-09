@@ -132,6 +132,7 @@ void Graphe::GenererFichierGraphe(string nomFichier) const
 	}
 	fdot << "}";
 	fdot.close();
+	remove("tmp");
 }
 
 
