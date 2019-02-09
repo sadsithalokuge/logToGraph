@@ -110,20 +110,29 @@ void ecrireDonneesNoeud(ofstream & fdot, const catArc::const_iterator & it, cons
 void Graphe::GenererFichierGraphe(string nomFichier) const
 {
 	ofstream fdot(nomFichier, ofstream::out);
+	ofstream ftmp("tmp", ofstream::out);
 	if(fdot)
 	{
 		fdot << "digraph {" << endl;
 		for(catArc::const_iterator it = mapArc.begin(); it != mapArc.end(); ++it)
 		{
 			fdot << "\t\"" << *(it->first) << "\";\n";
-			ecrireDonneesNoeud(fdot, it, (it->second).donneesNoeud);
+			ecrireDonneesNoeud(ftmp, it, (it->second).donneesNoeud);
 		}
 
+	}
+	ftmp.close();
+	
+	ifstream itmp("tmp");
+	string tampon;
+	while(itmp)
+	{
+		getline(itmp, tampon);
+		fdot << tampon << "\n";
 	}
 	fdot << "}";
 	fdot.close();
 }
-
 
 
 //------------------------------------------------- Surcharge d'opérateurs
