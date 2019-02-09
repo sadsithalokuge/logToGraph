@@ -45,10 +45,14 @@ string * Decoupeur::DecouperRequete ( ) const
 	//on se focalise sur la ressource demandée.
 	string * p;
 	unsigned int posGET = infos[2].find("?");
-	if(posGET == string::npos)
-		p = new string(infos[2]);
+	unsigned int posJSession = infos[2].find(";jsession");
+	if(posGET == string::npos && posJSession == string::npos)
+		p = new string(infos[2]); 
 	else
-		p = new string(infos[2].substr(0, posGET));
+	{
+		unsigned int posMin = min(posGET, posJSession);
+		p = new string(infos[2].substr(0, posMin));
+	}
 	return p;
 }
 
