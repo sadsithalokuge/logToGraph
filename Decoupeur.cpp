@@ -41,7 +41,15 @@ string * Decoupeur::DecouperDate() const
 
 string * Decoupeur::DecouperRequete ( ) const
 {
-	return new string(infos[2]);
+	//Suppression des valeurs envoyées au serveur par methode GET.
+	//on se focalise sur la ressource demandée.
+	string * p;
+	unsigned int posGET = infos[2].find("?");
+	if(posGET == string::npos)
+		p = new string(infos[2]);
+	else
+		p = new string(infos[2].substr(0, posGET));
+	return p;
 }
 
 string * Decoupeur::DecouperReferer ( ) const
