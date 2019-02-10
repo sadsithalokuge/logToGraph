@@ -1,0 +1,6 @@
+L'execution de ce programme nécessite des arguments
+Voici les synthaxes possibles :
+./main nomLog.log
+./main -t xx nomLog.log (avec xx entre 00 et 23)
+./main -g nomGraph.dot nomLog.log
+./main -e nomLog.log

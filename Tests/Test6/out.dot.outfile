@@ -1,0 +1,14 @@
+digraph{
+	"/D.html";
+	"/C.html";
+	"/A.html";
+	"/B.html";
+	"/C.html" -> "/D.html" [label="1"];
+	"/A.html" -> "/C.html" [label="2"];
+	"/C.html" -> "/A.html" [label="1"];
+	"/B.html" -> "/A.html" [label="3"];
+	"/D.html" -> "/B.html" [label="1"];
+	"/A.html" -> "/B.html" [label="1"];
+	"/B.html" -> "/B.html" [label="1"];
+
+}
