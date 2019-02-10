@@ -1,6 +1,6 @@
-L'execution de ce programme nécessite des arguments
+LogToGraph, TP C++ n°4.
 Voici les synthaxes possibles :
-./main nomLog.log
-./main -t xx nomLog.log (avec xx entre 00 et 23)
-./main -g nomGraph.dot nomLog.log
-./main -e nomLog.log
+./analog nomLog.log
+./analog -t xx nomLog.log (avec xx entre 00 et 23)
+./analog -g nomGraph.dot nomLog.log
+./analog -e nomLog.log
