@@ -23,7 +23,7 @@ class Filtre
 {
 	public:
 		//----- Methodes publiques -----
-		virtual bool LigneEstConforme(const std::vector<std::string> infos) const = 0;
+		virtual bool LigneEstConforme(const std::vector<std::string> & infos) const = 0;
 		//Mode d'emploi :
 		//	Retourne vrai si les infos de la ligne passées en paramètres sont
 		//	correct du point de vue du filtre.
@@ -45,7 +45,7 @@ class FiltreHeure : public Filtre
 {
 	public:
 		//----- Methodes publiques -----
-		virtual bool LigneEstConforme(const std::vector<std::string> infos) const;
+		virtual bool LigneEstConforme(const std::vector<std::string> & infos) const;
 		
 		// --- Constructeurs - Destructeurs ---
 		FiltreHeure(int heure);
@@ -60,7 +60,7 @@ class FiltreExtensions : public Filtre
 {
 	public:
 		//----- Methodes publiques -----
-		virtual bool LigneEstConforme(const std::vector<std::string> infos) const;
+		virtual bool LigneEstConforme(const std::vector<std::string> & infos) const;
 
 		//--- Constructeurs - Destructeurs ---
 		FiltreExtensions(string * extensions, unsigned int length);

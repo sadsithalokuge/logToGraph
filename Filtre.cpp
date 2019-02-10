@@ -19,13 +19,13 @@ using namespace std;
 
 //------------- Methodes publiques ---------------------------------------------------------
 
-bool FiltreHeure::LigneEstConforme(const vector<string> infos) const
+bool FiltreHeure::LigneEstConforme(const vector<string> & infos) const
 {
 	int h = atoi(infos[0].c_str());
 	return (h == Heure);	
 }
 
-bool FiltreExtensions::LigneEstConforme(const vector<string> infos) const
+bool FiltreExtensions::LigneEstConforme(const vector<string> & infos) const
 {
 	bool conforme = true;
 	for(unsigned int i = 0; i < NbExtensions; ++i)
