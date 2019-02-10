@@ -107,8 +107,9 @@ void ecrireDonneesNoeud(ofstream & fdot, const catArc::const_iterator & it, cons
 	}
 }
 
-void Graphe::GenererFichierGraphe(string nomFichier) const
+bool Graphe::GenererFichierGraphe(string nomFichier) const
 {
+	bool reussite;
 	ofstream fdot(nomFichier, ofstream::out);
 	ofstream ftmp("tmp", ofstream::out);
 	if(fdot)
@@ -120,19 +121,30 @@ void Graphe::GenererFichierGraphe(string nomFichier) const
 			ecrireDonneesNoeud(ftmp, it, (it->second).donneesNoeud);
 		}
 
-	}
-	ftmp.close();
 	
-	ifstream itmp("tmp");
-	string tampon;
-	while(itmp)
-	{
-		getline(itmp, tampon);
-		fdot << tampon << "\n";
+		ftmp.close();
+	
+		ifstream itmp("tmp");
+		string tampon;
+		while(itmp)
+		{
+			getline(itmp, tampon);
+			fdot << tampon << "\n";
+		}
+		fdot << "}";
+		fdot.close();
+		remove("tmp");
+		reussite = true;
 	}
-	fdot << "}";
-	fdot.close();
-	remove("tmp");
+	else
+	{
+		reussite = false;
+		fdot.close();
+		ftmp.close();
+		remove("tmp");
+	}
+	
+	return reussite;
 }
 
 

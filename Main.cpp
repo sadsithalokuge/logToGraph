@@ -120,14 +120,23 @@ void lireLog(string nomFichier, list<Filtre *> * filtres, string nomGraphe)
 {
 	Graphe g;
 	Decoupeur d(nomFichier, filtres);
-	while(d.LigneSuivante())
+	if(d.EstOK())
 	{
-		g.Ajouter(d.DecouperRequete(), d.DecouperReferer());
+		while(d.LigneSuivante())
+		{
+			g.Ajouter(d.DecouperRequete(), d.DecouperReferer());
+		}
+		g.afficherTop();
+		if(nomGraphe != "" && !g.GenererFichierGraphe(nomGraphe))
+		{
+			cerr << "Erreur lors de l'écriture dans le fichier " << nomGraphe << endl
+				<< "La création du fichier n'a pas pu avoir lieu." << endl;
+		}
 	}
-	g.afficherTop();
-
-	if(nomGraphe != "")
-		g.GenererFichierGraphe(nomGraphe);
+	else
+	{
+		cerr << "Erreur lors de l'ouverture du fichier " << nomFichier << endl;
+	}
 }
 
 void afficherSyntaxe()

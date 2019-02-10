@@ -71,7 +71,7 @@ public:
 	//		sont affichées.
 	// Contrat :
 
-    void GenererFichierGraphe(string nomFichier) const;
+    bool GenererFichierGraphe(string nomFichier) const;
     // Mode d'emploi :
     // 		Génère un fichier .dot dont le nom est fourni en
     // 		paramètre.
