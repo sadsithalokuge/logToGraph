@@ -22,7 +22,7 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-void Decoupeur::LigneSuivante() 
+bool Decoupeur::LigneSuivante() 
 {
 	if(fichier)
 	{
@@ -32,6 +32,7 @@ void Decoupeur::LigneSuivante()
 			DecouperLigne();
 		}while(fichier && !FiltresOK());
 	}
+	return EstOK();
 } //----- Fin de Méthode
 
 string * Decoupeur::DecouperDate() const

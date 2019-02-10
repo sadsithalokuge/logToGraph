@@ -34,7 +34,7 @@ class Decoupeur
 public:
 //----------------------------------------------------- Méthodes publiques
     
-    void LigneSuivante();
+    bool LigneSuivante();
     // Mode d'emploi :
     // 		Passe à la ligne suivante du fichier lu.
 

@@ -121,11 +121,9 @@ void lireLog(string nomFichier, list<Filtre *> * filtres, string nomGraphe)
 {
 	Graphe g;
 	Decoupeur d(nomFichier, filtres);
-	while(d.EstOK())
+	while(d.LigneSuivante())
 	{
-		d.LigneSuivante();
-		if(d.EstOK())
-			g.Ajouter(d.DecouperRequete(), d.DecouperReferer());
+		g.Ajouter(d.DecouperRequete(), d.DecouperReferer());
 	}
 	g.afficherTop();
 
