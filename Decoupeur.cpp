@@ -46,7 +46,12 @@ string * Decoupeur::DecouperRequete ( ) const
 
 string * Decoupeur::DecouperReferer ( ) const
 {
-	return SansArguments(infos[4]);
+	string * p;
+	if(infos[4].find("http://intranet-if.insa-lyon.fr") != string::npos)
+		p = SansArguments(infos[4].substr(31, infos[4].size()));
+	else
+		p = SansArguments(infos[4]);
+	return p;
 }
 
 string * Decoupeur::DecouperNavigateur() const
