@@ -70,8 +70,18 @@ int main ( int argc , char * argv [ ] )
 			try
 			{
 				heure = stoi ( argv [ ++i ] );
-				Filtre * f = new FiltreHeure(heure);
-				filtres = insererFiltre(filtres, f);
+				if(heure >= 0 && heure <= 23)
+				{
+					Filtre * f = new FiltreHeure(heure);
+					filtres = insererFiltre(filtres, f);
+				}
+				else
+				{
+					cerr << "ERREUR : Heure non comprise entre 0h et 23h :" << heure << endl
+						<< "Merci de prendre connaissance de la syntaxe :" << endl;
+					afficherSyntaxe();
+					return 0;
+				}
 			}
 			catch ( std::invalid_argument& e )
 			{

@@ -1,0 +1,6 @@
+LogToGraph, TP C++ n°4.
+Voici les synthaxes possibles :
+./analog nomLog.log
+./analog -t xx nomLog.log (avec xx entre 00 et 23)
+./analog -g nomGraph.dot nomLog.log
+./analog -e nomLog.log
