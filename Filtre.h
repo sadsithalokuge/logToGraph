@@ -1,77 +1,98 @@
-/******************************************************************
-Créé le : 06 février 2019
-par : pierre
-e-mail :
-******************************************************************/
+/*************************************************************************
+								  Filtre
+							 -------------------
+	début                : 09/01/2019
+	copyright            : (C) 2019 par Jacquot Pierre
+										Villenave Sophie
+*************************************************************************/
 
-//-------------- Interface de la classe <Filtre> (fichier Filtre.h) ---------------------
+//---------- Interface de la classe <Filtre> (fichier Filtre.h) ----------
 #if ! defined ( FILTRE_H )
 #define FILTRE_H
 
-//-------------- Interfaces utilisées -----------------------------
+//--------------------------------------------------- Interfaces utilisées
 #include <string>
 #include <vector>
-//-------------- Constantes ---------------------------------------
-//-------------- Types --------------------------------------------
+//------------------------------------------------------------- Constantes
+//------------------------------------------------------------------ Types
 
-//-----------------------------------------------------------------
-//Rôle de la classe <Filtre>:
-//
-//-----------------------------------------------------------------
+//------------------------------------------------------------------------
+// Rôle de la classe <Filtre> :
+// Permet de créer des filtres applicables aux lignes d'un log Apache.
+// On peut rajouter des filtres en ajoutant un héritier à la classe mère
+// Filtre.
+//------------------------------------------------------------------------
 
 class Filtre
 {
-	public:
-		//----- Methodes publiques -----
-		virtual bool LigneEstConforme(const std::vector<std::string> & infos) const = 0;
-		//Mode d'emploi :
-		//	Retourne vrai si les infos de la ligne passées en paramètres sont
-		//	correct du point de vue du filtre.
+//----------------------------------------------------------------- PUBLIC
+
+public:
+//----------------------------------------------------- Methodes publiques
+
+	virtual bool LigneEstConforme ( const std::vector<std::string> & infos ) const = 0;
+	//Mode d'emploi :
+	//	Retourne vrai si les infos de la ligne passées en paramètres sont
+	//	correct du point de vue du filtre.
 
 
-		//---- Surchage d'opérateurs ----
-		//--- Constructeurs - Destructeurs ---
-		Filtre();
-		virtual ~Filtre();
+//-------------------------------------------------- Surchage d'opérateurs
+//------------------------------------------- Constructeurs - Destructeurs
 
-	protected:
-		//----- Methodes protégées -----
-		//----- Attributs protégés -----
+	Filtre ( );
+	virtual ~Filtre ( );
+
+//------------------------------------------------------------------ PRIVE
+protected:
+//----------------------------------------------------- Methodes protégées
+//----------------------------------------------------- Attributs protégés
 
 };
-//------------ Autres définitions dépendantes de Filtre ----------
+//------------------------------- Autres définitions dépendantes de Filtre
 
 class FiltreHeure : public Filtre
 {
-	public:
-		//----- Methodes publiques -----
-		virtual bool LigneEstConforme(const std::vector<std::string> & infos) const;
-		
-		// --- Constructeurs - Destructeurs ---
-		FiltreHeure(int heure);
-		virtual ~FiltreHeure();
-	
-	private:
-		int Heure;
+//----------------------------------------------------------------- PUBLIC
+
+public:
+//----------------------------------------------------- Methodes publiques
+
+	virtual bool LigneEstConforme ( const std::vector<std::string> & infos ) const;
+
+//------------------------------------------- Constructeurs - Destructeurs
+
+	FiltreHeure ( int heure );
+	virtual ~FiltreHeure ( );
+
+//------------------------------------------------------------------ PRIVE
+
+private:
+	int Heure;
 };
 
 
 class FiltreExtensions : public Filtre
 {
-	public:
-		//----- Methodes publiques -----
-		virtual bool LigneEstConforme(const std::vector<std::string> & infos) const;
+//----------------------------------------------------------------- PUBLIC
 
-		//--- Constructeurs - Destructeurs ---
-		FiltreExtensions(string * extensions, unsigned int length);
-		// Mode d'emploi :
-		// 	Construit un objet en copiant le contenu dans le tableau fourni
-		// 	en paramètre dans ExtensionsInterdites.
+public:
+//----------------------------------------------------- Methodes publiques
 
-		virtual ~FiltreExtensions();
+	virtual bool LigneEstConforme ( const std::vector<std::string> & infos ) const;
 
-	private:
-		unsigned int NbExtensions;
-		string * ExtensionsInterdites;
+//------------------------------------------- Constructeurs - Destructeurs
+
+	FiltreExtensions ( string * extensions , unsigned int length );
+	// Mode d'emploi :
+	// 	Construit un objet en copiant le contenu dans le tableau fourni
+	// 	en paramètre dans ExtensionsInterdites.
+
+	virtual ~FiltreExtensions ( );
+
+//------------------------------------------------------------------ PRIVE
+
+private:
+	unsigned int NbExtensions;
+	string * ExtensionsInterdites;
 };
 #endif // ! defined ( FILTRE_H )

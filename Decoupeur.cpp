@@ -1,12 +1,12 @@
 /*************************************************************************
-                           Decoupeur  -  description
-                             -------------------
-    début                : $DATE$
-    copyright            : (C) $YEAR$ par $AUTHOR$
-    e-mail               : $EMAIL$
+								  Decoupeur
+							 -------------------
+	début                : 15/01/2019
+	copyright            : (C) 2019 par Jacquot Pierre
+										Villenave Sophie
 *************************************************************************/
 
-//---------- Réalisation de la classe <Decoupeur> (fichier Decoupeur.cpp) ------------
+//----- Réalisation de la classe <Decoupeur> (fichier Decoupeur.cpp) -----
 
 //---------------------------------------------------------------- INCLUDE
 
@@ -22,57 +22,57 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-bool Decoupeur::LigneSuivante() 
+bool Decoupeur::LigneSuivante ( )
 {
-	if(fichier)
+	if ( fichier )
 	{
 		do
 		{
-			getline(fichier, ligneActuelle);
-			DecouperLigne();
-		}while(fichier && !FiltresOK());
+			getline ( fichier , ligneActuelle );
+			DecouperLigne ( );
+		} while ( fichier && !FiltresOK ( ) );
 	}
-	return EstOK();
+	return EstOK ( );
 } //----- Fin de Méthode
 
-string * Decoupeur::DecouperDate() const
+string * Decoupeur::DecouperDate ( ) const
 {
-	return new string(infos[0]);	
+	return new string ( infos [ 0 ] );
 }
 
 string * Decoupeur::DecouperRequete ( ) const
 {
-	return SansArguments(infos[2]);
+	return SansArguments ( infos [ 2 ] );
 }
 
 string * Decoupeur::DecouperReferer ( ) const
 {
 	string * p;
-	if(infos[4].find("http://intranet-if.insa-lyon.fr") != string::npos)
-		p = SansArguments(infos[4].substr(31, infos[4].size()));
+	if ( infos [ 4 ].find ( "http://intranet-if.insa-lyon.fr" ) != string::npos )
+		p = SansArguments ( infos [ 4 ].substr ( 31 , infos [ 4 ].size ( ) ) );
 	else
-		p = SansArguments(infos[4]);
+		p = SansArguments ( infos [ 4 ] );
 	return p;
 }
 
-string * Decoupeur::DecouperNavigateur() const
+string * Decoupeur::DecouperNavigateur ( ) const
 {
-	return new string(infos[5]);
+	return new string ( infos [ 5 ] );
 }
 
-bool Decoupeur::EstOK() const
+bool Decoupeur::EstOK ( ) const
 {
-	return fichier.good();
+	return fichier.good ( );
 }
 
-bool Decoupeur::FiltresOK() const
+bool Decoupeur::FiltresOK ( ) const
 {
 	bool conforme = true;
-	if(ListeFiltres != nullptr)
+	if ( ListeFiltres != nullptr )
 	{
-		for(list<Filtre *>::iterator it = ListeFiltres->begin(); it != ListeFiltres->end(); ++it)
+		for ( list<Filtre *>::iterator it = ListeFiltres->begin ( ); it != ListeFiltres->end ( ); ++it )
 		{
-			if(!(*it)->LigneEstConforme(infos))
+			if ( !( *it )->LigneEstConforme ( infos ) )
 			{
 				conforme = false;
 				break;
@@ -86,10 +86,10 @@ bool Decoupeur::FiltresOK() const
 
 //-------------------------------------------- Constructeurs - destructeur
 
-Decoupeur::Decoupeur(string nomFichier, list<Filtre *> * liste) : fichier(nomFichier), ligneActuelle(""), ListeFiltres(liste)
+Decoupeur::Decoupeur ( string nomFichier , list<Filtre *> * liste ) : fichier ( nomFichier ) , ligneActuelle ( "" ) , ListeFiltres ( liste )
 {
 #ifdef MAP
-    cout << "Appel au constructeur de <Decoupeur>" << endl;
+	cout << "Appel au constructeur de <Decoupeur>" << endl;
 #endif
 }
 
@@ -99,17 +99,17 @@ Decoupeur::~Decoupeur ( )
 //
 {
 #ifdef MAP
-    cout << "Appel au destructeur de <Decoupeur>" << endl;
+	cout << "Appel au destructeur de <Decoupeur>" << endl;
 #endif
-    fichier.close();
-    if(ListeFiltres != nullptr)
-    {
-    	for(list<Filtre*>::iterator it = ListeFiltres->begin(); it != ListeFiltres->end(); ++it)
-    	{
-		delete (*it);
-    	}
-    	delete ListeFiltres;
-    }
+	fichier.close ( );
+	if ( ListeFiltres != nullptr )
+	{
+		for ( list<Filtre*>::iterator it = ListeFiltres->begin ( ); it != ListeFiltres->end ( ); ++it )
+		{
+			delete ( *it );
+		}
+		delete ListeFiltres;
+	}
 } //----- Fin de ~Decoupeur
 
 
@@ -117,9 +117,9 @@ Decoupeur::~Decoupeur ( )
 
 //----------------------------------------------------- Méthodes protégées
 
-void Decoupeur::DecouperLigne()
+void Decoupeur::DecouperLigne ( )
 {
-	char separateurs [] = {':', ':', ' ', '"', ' ', ' ', '"', ' ', '"', '"', '"', '"' };
+	char separateurs [ ] = { ':', ':', ' ', '"', ' ', ' ', '"', ' ', '"', '"', '"', '"' };
 	int indexSep = 0;
 	char tampon;
 	string motTampon;
@@ -127,22 +127,22 @@ void Decoupeur::DecouperLigne()
 	int indexString = 0;
 	string stringTampon = "";
 
-	infos.clear();
+	infos.clear ( );
 
-	while(indexSep < 10)
+	while ( indexSep < 10 )
 	{
-		tampon = ligneActuelle[indexString];
-		if( tampon == separateurs[indexSep])
+		tampon = ligneActuelle [ indexString ];
+		if ( tampon == separateurs [ indexSep ] )
 		{
 			++indexSep;
-			if(enregistrer)
+			if ( enregistrer )
 			{
-				infos.push_back(motTampon);
+				infos.push_back ( motTampon );
 				motTampon = "";
 			}
 			enregistrer = !enregistrer;
 		}
-		else if(enregistrer)
+		else if ( enregistrer )
 		{
 			motTampon += tampon;
 		}
@@ -150,20 +150,20 @@ void Decoupeur::DecouperLigne()
 	}
 }
 
-string * Decoupeur::SansArguments(const string & url) const
+string * Decoupeur::SansArguments ( const string & url ) const
 {
 	//Suppression des valeurs envoyées au serveur par methode GET
 	//et des jsession.
 	//on se focalise sur la ressource demandée.
 	string * p;
-	unsigned int posGET = url.find("?");
-	unsigned int posJSession = url.find(";jsession");
-	if(posGET == string::npos && posJSession == string::npos)
-		p = new string(url); 
+	unsigned int posGET = url.find ( "?" );
+	unsigned int posJSession = url.find ( ";jsession" );
+	if ( posGET == string::npos && posJSession == string::npos )
+		p = new string ( url );
 	else
 	{
-		unsigned int posMin = min(posGET, posJSession);
-		p = new string(url.substr(0, posMin));
+		unsigned int posMin = min ( posGET , posJSession );
+		p = new string ( url.substr ( 0 , posMin ) );
 	}
 
 	return p;
